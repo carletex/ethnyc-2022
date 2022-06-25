@@ -20,13 +20,31 @@ module.exports = async ({ getNamedAccounts, deployments, getChainId }) => {
   await deploy("StakingCourse", {
     // Learn more about args here: https://www.npmjs.com/package/hardhat-deploy#deploymentsdeploy
     from: deployer,
-    args: ["Our course", 4, ethers.utils.parseEther("1")],
+    args: [
+      "Our course",
+      4,
+      ethers.utils.parseEther("1"),
+      "0xa95e3F6bCd8348ce72fC1a201c98f26dBFf1D14F",
+    ],
     log: true,
     waitConfirmations: 5,
   });
 
   // Getting a previously deployed contract
   // const YourContract = await ethers.getContract("StakingCourse", deployer);
+
+  // await YourContract.transferOwnership(
+  //   "0xa95e3F6bCd8348ce72fC1a201c98f26dBFf1D14F"
+  // );
+
+  await deploy("StakingCourseFactory", {
+    // Learn more about args here: https://www.npmjs.com/package/hardhat-deploy#deploymentsdeploy
+    from: deployer,
+    // args: ["Our course", 4, ethers.utils.parseEther("1")],
+    log: true,
+    waitConfirmations: 5,
+  });
+
   /*  await YourContract.setPurpose("Hello");
 
     // To take ownership of yourContract using the ownable library uncomment next line and add the
@@ -79,4 +97,4 @@ module.exports = async ({ getNamedAccounts, deployments, getChainId }) => {
   //   console.error(error);
   // }
 };
-module.exports.tags = ["StakingCourse"];
+module.exports.tags = ["StakingCourse", "StakingCourseFactory"];

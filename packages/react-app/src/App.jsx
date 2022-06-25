@@ -320,6 +320,15 @@ function App(props) {
             */}
 
           <Contract
+            name="StakingCourseFactory"
+            price={price}
+            signer={userSigner}
+            provider={localProvider}
+            address={address}
+            blockExplorer={blockExplorer}
+            contractConfig={contractConfig}
+          />
+          <Contract
             name="StakingCourse"
             price={price}
             signer={userSigner}

@@ -2,10 +2,10 @@ pragma solidity >=0.8.0 <0.9.0;
 //SPDX-License-Identifier: MIT
 
 import "hardhat/console.sol";
-// import "@openzeppelin/contracts/access/Ownable.sol";
+import "@openzeppelin/contracts/access/Ownable.sol";
 // https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/access/Ownable.sol
 
-contract StakingCourse {
+contract StakingCourse is Ownable {
 
     string public courseName;
     uint256 public stepsNumber;
@@ -21,10 +21,11 @@ contract StakingCourse {
 
     mapping(address => studentData) public students;
 
-    constructor(string memory _courseName, uint256 _stepsNumber, uint256 _stakeAmount) {
+    constructor(string memory _courseName, uint256 _stepsNumber, uint256 _stakeAmount, address courseCreator) {
         courseName = _courseName;
         stepsNumber = _stepsNumber;
         stakeAmount = _stakeAmount;
+        transferOwnership(courseCreator);
     }
 
     function studentStake() public payable {
@@ -55,7 +56,7 @@ contract StakingCourse {
     }
 
     // ToDo. Only course creator.
-    function updateStudentProgress(address _studentAddress) public {
+    function updateStudentProgress(address _studentAddress) public onlyOwner {
         require(students[msg.sender].registrationTimestamp > 0, "User not registered");
         require(students[msg.sender].completedSteps < stepsNumber, "User already finished");
 
