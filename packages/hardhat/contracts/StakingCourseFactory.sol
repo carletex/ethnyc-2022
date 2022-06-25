@@ -7,10 +7,13 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 // https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/access/Ownable.sol
 
 contract StakingCourseFactory {
-    StakingCourse[] public CourseList;
+    uint256 coursesCount;
+    mapping(address => StakingCourse[]) public creatorCourses;
 
     function createNewCourse(string memory _courseName, uint256 _stepsNumber, uint256 _stakeAmount) public {
         StakingCourse course = new StakingCourse(_courseName, _stepsNumber, _stakeAmount, msg.sender);
-        CourseList.push(course);
+
+        creatorCourses[msg.sender].push(course);
+        coursesCount += 1;
     }
 }
