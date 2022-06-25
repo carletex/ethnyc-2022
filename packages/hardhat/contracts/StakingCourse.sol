@@ -34,6 +34,18 @@ contract StakingCourse {
         studentCount += 1;
     }
 
+    // ToDo. Only course creator.
+    function updateStudentProgress(address _studentAddress) public {
+        require(students[msg.sender].registrationTimestamp > 0, "User not registered");
+        require(students[msg.sender].completedSteps < stepsNumber, "User already finished");
+
+        students[_studentAddress].completedSteps += 1;
+    }
+
+    function getStudentProgress(address _studentAddress) view public returns(uint256) {
+        return students[_studentAddress].completedSteps;
+    }
+
     // to support receiving ETH by default
     receive() external payable {}
     fallback() external payable {}
