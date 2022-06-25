@@ -16,4 +16,8 @@ contract StakingCourseFactory {
         creatorCourses[msg.sender].push(course);
         coursesCount += 1;
     }
+
+    function getCourseCountFromCreator(address _creatorAddress) view public returns(uint256) {
+        return creatorCourses[_creatorAddress].length;
+    }
 }
