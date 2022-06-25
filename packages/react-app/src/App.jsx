@@ -320,7 +320,7 @@ function App(props) {
             */}
 
           <Contract
-            name="YourContract"
+            name="StakingCourse"
             price={price}
             signer={userSigner}
             provider={localProvider}
