@@ -15,7 +15,7 @@ contract StakingCourse is Ownable {
 
     struct studentData {
         uint256 completedSteps;
-        uint256 stackedAmount;
+        uint256 stakedAmount;
         uint256 registrationTimestamp;
     }
 
@@ -38,18 +38,18 @@ contract StakingCourse is Ownable {
 
     // ToDo. Review.
     function studentWithdraw() public {
-        require(students[msg.sender].stackedAmount > 0, "No staking amount left");
+        require(students[msg.sender].stakedAmount > 0, "No staking amount left");
 
         // Each step unlocks «stepStake»
         uint256 stepStake = stakeAmount / stepsNumber;
         // Total «unlockedAmount» based on the completed challenges.
         uint256 unlockedAmount = students[msg.sender].completedSteps * stepStake;
 
-        uint256 availableAmount = students[msg.sender].stackedAmount + unlockedAmount - stakeAmount;
+        uint256 availableAmount = students[msg.sender].stakedAmount + unlockedAmount - stakeAmount;
 
         require(availableAmount > 0, "No available withdraw");
 
-        students[msg.sender].stackedAmount -= availableAmount;
+        students[msg.sender].stakedAmount -= availableAmount;
 
         (bool sent,) = msg.sender.call{value: availableAmount}("");
         require(sent, "Failed to send Ether");
@@ -57,8 +57,8 @@ contract StakingCourse is Ownable {
 
     // ToDo. Only course creator.
     function updateStudentProgress(address _studentAddress) public onlyOwner {
-        require(students[msg.sender].registrationTimestamp > 0, "User not registered");
-        require(students[msg.sender].completedSteps < stepsNumber, "User already finished");
+        require(students[_studentAddress].registrationTimestamp > 0, "User not registered");
+        require(students[_studentAddress].completedSteps < stepsNumber, "User already finished");
 
         students[_studentAddress].completedSteps += 1;
     }
