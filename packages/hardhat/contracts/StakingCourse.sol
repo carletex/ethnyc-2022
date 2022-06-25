@@ -15,6 +15,7 @@ contract StakingCourse {
 
     struct studentData {
         uint256 completedSteps;
+        uint256 stackedAmount;
         uint256 registrationTimestamp;
     }
 
@@ -30,8 +31,27 @@ contract StakingCourse {
         require(msg.value == stakeAmount, "Invalid stake amount");
         require(students[msg.sender].registrationTimestamp == 0, "Already registered");
 
-        students[msg.sender] = studentData(0, block.timestamp);
+        students[msg.sender] = studentData(0, msg.value, block.timestamp);
         studentCount += 1;
+    }
+
+    // ToDo. Review.
+    function studentWithdraw() public {
+        require(students[msg.sender].stackedAmount > 0, "No staking amount left");
+
+        // Each step unlocks «stepStake»
+        uint256 stepStake = stakeAmount / stepsNumber;
+        // Total «unlockedAmount» based on the completed challenges.
+        uint256 unlockedAmount = students[msg.sender].completedSteps * stepStake;
+
+        uint256 availableAmount = students[msg.sender].stackedAmount + unlockedAmount - stakeAmount;
+
+        require(availableAmount > 0, "No available withdraw");
+
+        students[msg.sender].stackedAmount -= availableAmount;
+
+        (bool sent,) = msg.sender.call{value: availableAmount}("");
+        require(sent, "Failed to send Ether");
     }
 
     // ToDo. Only course creator.
