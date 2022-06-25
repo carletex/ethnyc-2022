@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useContractReader } from "eth-hooks";
 import { Button, Input } from "antd";
+import { Link } from "react-router-dom";
 
 export default function MyCoursesPage({ readContracts, writeContracts, address, tx }) {
   const [formState, setFormState] = useState();
@@ -88,7 +89,11 @@ export default function MyCoursesPage({ readContracts, writeContracts, address, 
       <h2>My active courses</h2>
       <ul>
         {myCourses.map(course => {
-          return <li>{course}</li>;
+          return (
+            <li>
+              <Link to={`/my-course/${course}`}>{course}</Link>
+            </li>
+          );
         })}
       </ul>
     </div>

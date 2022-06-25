@@ -22,7 +22,7 @@ import externalContracts from "./contracts/external_contracts";
 // contracts
 import deployedContracts from "./contracts/hardhat_contracts.json";
 import { Transactor, Web3ModalSetup } from "./helpers";
-import { Home, MyCoursesPage } from "./views";
+import { Home, MyCourseDetail, MyCoursesPage } from "./views";
 import { useStaticJsonRPC } from "./hooks";
 
 const { ethers } = require("ethers");
@@ -309,6 +309,9 @@ function App(props) {
         </Route>
         <Route path="/my-courses">
           <MyCoursesPage readContracts={readContracts} address={address} tx={tx} writeContracts={writeContracts} />
+        </Route>
+        <Route path="/my-course/:courseContractAddress">
+          <MyCourseDetail userSigner={userSigner} localProvider={localProvider} />
         </Route>
       </Switch>
 
