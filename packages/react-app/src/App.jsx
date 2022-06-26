@@ -309,15 +309,30 @@ function App(props) {
             blockExplorer={blockExplorer}
             contractConfig={contractConfig}
           />
+          <Contract
+            name="CourseBadgesNFT"
+            price={price}
+            signer={userSigner}
+            provider={localProvider}
+            address={address}
+            blockExplorer={blockExplorer}
+            contractConfig={contractConfig}
+          />
         </Route>
         <Route path="/my-courses">
           <MyCoursesPage readContracts={readContracts} address={address} tx={tx} writeContracts={writeContracts} />
         </Route>
-        <Route path="/my-course/:courseContractAddress">
+        <Route path="/my-course/:courseContractAddress/:courseBadgeAddress">
           <MyCourseDetail userSigner={userSigner} localProvider={localProvider} />
         </Route>
         <Route path="/sign-up">
-          <SignUpPage userSigner={userSigner} tx={tx} address={address} />
+          <SignUpPage
+            userSigner={userSigner}
+            tx={tx}
+            address={address}
+            mainnetProvider={mainnetProvider}
+            readContracts={readContracts}
+          />
         </Route>
       </Switch>
 

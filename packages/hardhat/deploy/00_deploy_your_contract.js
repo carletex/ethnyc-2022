@@ -15,20 +15,6 @@ const localChainId = "31337";
 module.exports = async ({ getNamedAccounts, deployments, getChainId }) => {
   const { deploy } = deployments;
   const { deployer } = await getNamedAccounts();
-  const chainId = await getChainId();
-
-  await deploy("StakingCourse", {
-    // Learn more about args here: https://www.npmjs.com/package/hardhat-deploy#deploymentsdeploy
-    from: deployer,
-    args: [
-      "Our course",
-      4,
-      ethers.utils.parseEther("1"),
-      "0xa95e3F6bCd8348ce72fC1a201c98f26dBFf1D14F",
-    ],
-    log: true,
-    waitConfirmations: 5,
-  });
 
   // Getting a previously deployed contract
   // const YourContract = await ethers.getContract("StakingCourse", deployer);
@@ -41,6 +27,27 @@ module.exports = async ({ getNamedAccounts, deployments, getChainId }) => {
     // Learn more about args here: https://www.npmjs.com/package/hardhat-deploy#deploymentsdeploy
     from: deployer,
     // args: ["Our course", 4, ethers.utils.parseEther("1")],
+    log: true,
+    waitConfirmations: 5,
+  });
+
+  await deploy("StakingCourse", {
+    // Learn more about args here: https://www.npmjs.com/package/hardhat-deploy#deploymentsdeploy
+    from: deployer,
+    args: [
+      "Test course",
+      4,
+      ethers.utils.parseEther("1"),
+      "0xa95e3F6bCd8348ce72fC1a201c98f26dBFf1D14F",
+    ],
+    log: true,
+    waitConfirmations: 5,
+  });
+  //
+  await deploy("CourseBadgesNFT", {
+    // Learn more about args here: https://www.npmjs.com/package/hardhat-deploy#deploymentsdeploy
+    from: deployer,
+    args: ["0xa95e3F6bCd8348ce72fC1a201c98f26dBFf1D14F"],
     log: true,
     waitConfirmations: 5,
   });

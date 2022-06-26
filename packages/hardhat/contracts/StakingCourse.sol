@@ -3,9 +3,10 @@ pragma solidity >=0.8.0 <0.9.0;
 
 import "hardhat/console.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
-// https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/access/Ownable.sol
+import "./CourseBadgesNFT.sol";
 
 contract StakingCourse is Ownable {
+    address public badgeSystemAddress;
 
     string public courseName;
     uint256 public stepsNumber;
@@ -26,6 +27,11 @@ contract StakingCourse is Ownable {
         stepsNumber = _stepsNumber;
         stakeAmount = _stakeAmount;
         transferOwnership(courseCreator);
+    }
+
+    function setBadgeSystem(address _badgeAddress) public {
+        require(tx.origin == owner(), "Not owner");
+        badgeSystemAddress = _badgeAddress;
     }
 
     function studentStake() public payable {
@@ -61,6 +67,7 @@ contract StakingCourse is Ownable {
         require(students[_studentAddress].completedSteps < stepsNumber, "User already finished");
 
         students[_studentAddress].completedSteps += 1;
+        CourseBadgesNFT(badgeSystemAddress).mint(_studentAddress, students[_studentAddress].completedSteps);
     }
 
     function getStudentProgress(address _studentAddress) view public returns(uint256) {

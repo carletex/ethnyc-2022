@@ -91,7 +91,7 @@ export default function MyCoursesPage({ readContracts, writeContracts, address, 
         {myCourses.map(course => {
           return (
             <li>
-              <Link to={`/my-course/${course}`}>{course}</Link>
+              <Link to={`/my-course/${course.stakingAddress}/${course.badgeAddress}`}>{course.stakingAddress}</Link>
             </li>
           );
         })}

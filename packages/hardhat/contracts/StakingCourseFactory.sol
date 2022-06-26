@@ -3,17 +3,25 @@ pragma solidity >=0.8.0 <0.9.0;
 
 import "hardhat/console.sol";
 import "./StakingCourse.sol";
+import "./CourseBadgesNFT.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
-// https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/access/Ownable.sol
 
 contract StakingCourseFactory {
     uint256 coursesCount;
-    mapping(address => StakingCourse[]) public creatorCourses;
+
+    struct Course {
+        address stakingAddress;
+        address badgeAddress;
+    }
+    mapping(address => Course[]) public creatorCourses;
 
     function createNewCourse(string memory _courseName, uint256 _stepsNumber, uint256 _stakeAmount) public {
         StakingCourse course = new StakingCourse(_courseName, _stepsNumber, _stakeAmount, msg.sender);
+        CourseBadgesNFT badge = new CourseBadgesNFT(address(course));
 
-        creatorCourses[msg.sender].push(course);
+        course.setBadgeSystem(address(badge));
+
+        creatorCourses[msg.sender].push(Course(address(course), address(badge)));
         coursesCount += 1;
     }
 
