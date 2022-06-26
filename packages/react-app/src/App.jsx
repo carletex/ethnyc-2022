@@ -300,24 +300,24 @@ function App(props) {
             blockExplorer={blockExplorer}
             contractConfig={contractConfig}
           />
-          <Contract
-            name="StakingCourse"
-            price={price}
-            signer={userSigner}
-            provider={localProvider}
-            address={address}
-            blockExplorer={blockExplorer}
-            contractConfig={contractConfig}
-          />
-          <Contract
-            name="CourseBadgesNFT"
-            price={price}
-            signer={userSigner}
-            provider={localProvider}
-            address={address}
-            blockExplorer={blockExplorer}
-            contractConfig={contractConfig}
-          />
+          {/*<Contract*/}
+          {/*  name="StakingCourse"*/}
+          {/*  price={price}*/}
+          {/*  signer={userSigner}*/}
+          {/*  provider={localProvider}*/}
+          {/*  address={address}*/}
+          {/*  blockExplorer={blockExplorer}*/}
+          {/*  contractConfig={contractConfig}*/}
+          {/*/>*/}
+          {/*<Contract*/}
+          {/*  name="CourseBadgesNFT"*/}
+          {/*  price={price}*/}
+          {/*  signer={userSigner}*/}
+          {/*  provider={localProvider}*/}
+          {/*  address={address}*/}
+          {/*  blockExplorer={blockExplorer}*/}
+          {/*  contractConfig={contractConfig}*/}
+          {/*/>*/}
         </Route>
         <Route path="/my-courses">
           <MyCoursesPage readContracts={readContracts} address={address} tx={tx} writeContracts={writeContracts} />
