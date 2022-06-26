@@ -2,3 +2,18 @@
   text-align: center;
   padding-left: calc(100vw - 100%);
 }
+
+.my-courses {
+  padding: 20px;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.my-courses input {
+  margin-bottom: 10px;
+}
+
+.my-courses h2 {
+  margin-top: 15px;
+}
+

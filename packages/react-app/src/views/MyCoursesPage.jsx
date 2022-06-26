@@ -50,8 +50,8 @@ export default function MyCoursesPage({ readContracts, writeContracts, address, 
   };
 
   return (
-    <div>
-      <h1>My Courses</h1>
+    <div className="my-courses">
+      <h1>Courses Admin Page</h1>
 
       <Input
         onChange={e => {
@@ -82,7 +82,7 @@ export default function MyCoursesPage({ readContracts, writeContracts, address, 
         }
         placeholder="Required staking amount"
       />
-      <Button style={{ marginTop: 8 }} onClick={createCourse}>
+      <Button style={{ marginTop: 8 }} onClick={createCourse} type="primary">
         + Create Course
       </Button>
 
