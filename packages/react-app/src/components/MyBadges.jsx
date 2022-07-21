@@ -1,5 +1,5 @@
 import { Card, List } from "antd";
-import React, { useState, useEffect, useMemo } from "react";
+import React, { useState, useEffect, useMemo, useCallback } from "react";
 import { Address } from "./index";
 import { ethers } from "ethers";
 import COURSE_BADGES_NFT_ABI from "../contracts/courseBadgesNFTAbi";
@@ -14,17 +14,17 @@ export const MyBadges = ({ address, mainnetProvider, userSigner }) => {
     return new ethers.Contract(badgeContractAddress, COURSE_BADGES_NFT_ABI, userSigner);
   }, [userSigner, badgeContractAddress]);
 
-  const getBalanceData = async () => {
+  const getBalanceData = useCallback(async () => {
     const balanceData = await badgeContract.balanceOf(address);
     console.log("balanceData", balanceData.toNumber());
     setBalance(balanceData.toNumber());
-  };
+  }, [address, badgeContract]);
 
   useEffect(() => {
     if (badgeContract && address) {
       getBalanceData();
     }
-  }, [badgeContract, address]);
+  }, [badgeContract, address, getBalanceData]);
 
   useEffect(() => {
     const updateYourCollectibles = async () => {
@@ -50,7 +50,7 @@ export const MyBadges = ({ address, mainnetProvider, userSigner }) => {
       setYourCollectibles(collectibleUpdate.reverse());
     };
     updateYourCollectibles();
-  }, [address, balance]);
+  }, [address, balance, badgeContract]);
 
   return (
     <div style={{ width: 820, margin: "auto", paddingBottom: 256 }}>

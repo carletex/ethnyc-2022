@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { ethers } from "ethers";
 import STAKING_COURSE_ABI from "../contracts/stakingCourseAbi";
 import { Button } from "antd";
@@ -43,7 +43,7 @@ export default function SignUpPage({ address, userSigner, tx, readContracts, mai
     console.log(await result);
   };
 
-  const getStudentData = async () => {
+  const getStudentData = useCallback(async () => {
     const ourStudentData = await courseContract.students(address);
     console.log("ourStudentData", ourStudentData.registrationTimestamp);
     setMyStudentData({
@@ -51,14 +51,14 @@ export default function SignUpPage({ address, userSigner, tx, readContracts, mai
       stakedAmount: ourStudentData.stakedAmount,
       completedSteps: ourStudentData.completedSteps,
     });
-  };
+  }, [courseContract, address]);
 
   useEffect(() => {
     if (courseContract && address) {
       console.log(courseContract, "courseC");
       getStudentData();
     }
-  }, [courseContract, address]);
+  }, [courseContract, address, getStudentData]);
 
   const signedUpUserData = amISignedUp && (
     <div>
