@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useContractReader } from "eth-hooks";
 import { Button, Input } from "antd";
 import { Link } from "react-router-dom";
+import { ethers } from "ethers";
 
 export default function MyCoursesPage({ readContracts, writeContracts, address, tx }) {
   const [formState, setFormState] = useState();
@@ -36,7 +37,7 @@ export default function MyCoursesPage({ readContracts, writeContracts, address, 
       writeContracts?.StakingCourseFactory?.createNewCourse(
         formState.courseName,
         formState.stepCount,
-        formState.stakeAmount,
+        ethers.utils.parseEther(formState.stakeAmount),
       ),
       update => {
         console.log("📡 Transaction Update:", update);
@@ -80,7 +81,7 @@ export default function MyCoursesPage({ readContracts, writeContracts, address, 
             stakeAmount: e.target.value,
           }))
         }
-        placeholder="Required staking amount"
+        placeholder="Required staking amount (ETH)"
       />
       <Button style={{ marginTop: 8 }} onClick={createCourse} type="primary">
         + Create Course
